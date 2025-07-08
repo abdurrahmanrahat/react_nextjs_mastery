@@ -3,7 +3,7 @@ title: "Introduction"
 date: "2024-04-09"
 parent: null
 order: 1
-author: Abdur Rahman
+author: Lenevoiya
 category: General
 tags: ["intro", "getting-started"]
 ---
