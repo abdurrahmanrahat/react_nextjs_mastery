@@ -74,10 +74,10 @@ const Sidebar = ({ docs }) => {
               <li key={rootNode.id} className="relative">
                 <Link
                   aria-current="page"
-                  class="flex justify-between gap-2 py-1 pl-4 pr-3 text-sm text-zinc-900 transition dark:text-white"
+                  className="flex justify-between gap-2 py-1 pl-4 pr-3 text-sm text-zinc-900 transition dark:text-white"
                   href={`/docs/${rootNode.id}`}
                 >
-                  <span class="truncate">{rootNode.title}</span>
+                  <span className="truncate">{rootNode.title}</span>
                 </Link>
 
                 {nonRootNodesGroup[rootNode.id] && (
