@@ -30,3 +30,20 @@ export const getLocationLatLong = async (locationName) => {
         console.error(e.message);
     }
 };
+
+export const getResolvedLatLong = async (location, lat, lon) => {
+    console.log(location, lat, lon);
+    if (lat && lon) {
+        return { lat, lon };
+    }
+
+    const locationLatlong = await getLocationLatLong(location);
+    console.log(locationLatlong);
+
+    if (locationLatlong.latitude && locationLatlong.longitude) {
+        const lat = locationLatlong.latitude;
+        const lon = locationLatlong.longitude;
+
+        return { lat, lon };
+    }
+};
