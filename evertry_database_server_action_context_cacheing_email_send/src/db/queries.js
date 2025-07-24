@@ -16,8 +16,13 @@ async function createUser(user) {
     return await UserModel.create(user)
 }
 
+async function findUserByCredentials(credentials) {
+    const user = await UserModel.findOne(credentials).lean();
+    return user
+}
+
 export {
-    createUser, getAllEVents,
+    createUser, findUserByCredentials, getAllEVents,
     getEVentById
 };
 
