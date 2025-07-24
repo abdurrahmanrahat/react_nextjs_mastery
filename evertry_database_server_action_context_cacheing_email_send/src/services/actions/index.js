@@ -12,17 +12,17 @@ async function registerUser(formData) {
 }
 
 async function loginUser(formData) {
-    const credentials = {};
+    try {
+        const credentials = {};
 
-    credentials.email = formData.get("email")
-    credentials.password = formData.get("password")
+        credentials.email = formData.get("email")
+        credentials.password = formData.get("password")
 
-    const user = await findUserByCredentials(credentials)
+        const user = await findUserByCredentials(credentials)
 
-    if(user){
-        redirect("/")
-    } else {
-        throw new Error(`User with email ${formData.get("email")} not found!`)
+        return user
+    } catch (error) {
+        throw error
     }
 }
 
