@@ -1,6 +1,9 @@
+import Header from "@/components/Landing/Header";
 
 export default function Home() {
   return (
-    <div>Eventry</div>
+    <section className="container">
+      <Header />
+    </section>
   );
 }
