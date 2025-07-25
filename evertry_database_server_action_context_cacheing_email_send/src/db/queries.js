@@ -50,6 +50,7 @@ async function updateGoing(eventId, authId) {
     event.save()
 }
 
+
 export {
     createUser, findUserByCredentials, getAllEVents,
     getEVentById, updateGoing, updateInterest
