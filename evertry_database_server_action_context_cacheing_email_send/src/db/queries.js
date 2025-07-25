@@ -1,6 +1,7 @@
 import { EventModel } from "@/models/event-models";
 import { UserModel } from "@/models/user-model";
 import { replaceMongoIdInArray, replaceMongoIdInObject } from "@/utils/data-utils";
+import mongoose from "mongoose";
 
 async function getAllEVents() {
     const allEvents = await EventModel.find().lean()
@@ -25,8 +26,24 @@ async function findUserByCredentials(credentials) {
     return null
 }
 
+async function updateInterest(eventId, authId) {
+    const event = await EventModel.findById(eventId)
+
+    if(event){
+        const foundEventUser = event.interested_ids.find(id => id.toString() === authId)
+
+        if(foundEventUser){
+            event.interested_ids.pull(new mongoose.Types.ObjectId(authId))
+        } else{
+            event.interested_ids.push(new mongoose.Types.ObjectId(authId))
+        }
+
+        event.save()
+    }
+}
+
 export {
     createUser, findUserByCredentials, getAllEVents,
-    getEVentById
+    getEVentById, updateInterest
 };
 
