@@ -3,8 +3,15 @@ import { UserModel } from "@/models/user-model";
 import { replaceMongoIdInArray, replaceMongoIdInObject } from "@/utils/data-utils";
 import mongoose from "mongoose";
 
-async function getAllEVents() {
-    const allEvents = await EventModel.find().lean()
+async function getAllEVents(query) {
+    let allEvents = []
+
+    if (query) {
+        const regex = new RegExp(query, "i")
+        allEvents = await EventModel.find({ name: { $regex: regex } }).lean()
+    }
+
+    allEvents = await EventModel.find().lean()
     return replaceMongoIdInArray(allEvents)
 }
 
@@ -20,7 +27,7 @@ async function createUser(user) {
 async function findUserByCredentials(credentials) {
     const user = await UserModel.findOne(credentials).lean();
 
-    if(user){
+    if (user) {
         return replaceMongoIdInObject(user)
     }
     return null
@@ -29,12 +36,12 @@ async function findUserByCredentials(credentials) {
 async function updateInterest(eventId, authId) {
     const event = await EventModel.findById(eventId)
 
-    if(event){
+    if (event) {
         const foundEventUser = event.interested_ids.find(id => id.toString() === authId)
 
-        if(foundEventUser){
+        if (foundEventUser) {
             event.interested_ids.pull(new mongoose.Types.ObjectId(authId))
-        } else{
+        } else {
             event.interested_ids.push(new mongoose.Types.ObjectId(authId))
         }
 

@@ -1,11 +1,11 @@
 import EventList from "@/components/Landing/EventList";
 import Header from "@/components/Landing/Header";
 
-export default function Home() {
+export default function Home({searchParams: {query}}) {
   return (
     <section className="container">
       <Header />
-      <EventList />
+      <EventList query={query} />
     </section>
   );
 }
