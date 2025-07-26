@@ -1,13 +1,17 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-     images: {
-        remotePatterns: [
-            {
-                protocol: 'https',
-                hostname: "**"
-            }
-        ],
-    },
-};
+import withPlaiceholder from '@plaiceholder/next'
 
-export default nextConfig;
+void withPlaiceholder  // intentionally referenced to avoid auto-removal
+
+const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+    ],
+  },
+}
+
+export default nextConfig

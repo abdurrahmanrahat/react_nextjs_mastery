@@ -30,7 +30,7 @@ export default async function RootLayout({ children }) {
       >
         <AuthProvider>
           <Navbar />
-          <main class="py-8">
+          <main className="py-8">
             {children}
           </main>
         </AuthProvider>

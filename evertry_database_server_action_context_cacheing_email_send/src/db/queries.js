@@ -9,9 +9,10 @@ async function getAllEVents(query) {
     if (query) {
         const regex = new RegExp(query, "i")
         allEvents = await EventModel.find({ name: { $regex: regex } }).lean()
+    } else {
+        allEvents = await EventModel.find().lean()
     }
 
-    allEvents = await EventModel.find().lean()
     return replaceMongoIdInArray(allEvents)
 }
 
