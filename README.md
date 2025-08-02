@@ -1,1 +1,1 @@
-# Next.js Practice Project
+# React_Next.js Practice Project
