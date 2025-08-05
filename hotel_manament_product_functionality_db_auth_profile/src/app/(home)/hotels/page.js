@@ -1,8 +1,16 @@
-import HotelList from "@/components/hotel/HotelList"
-import Filter from "@/components/search/Filter"
-import Search from "@/components/search/Search"
+import HotelList from "@/components/hotel/HotelList";
+import Filter from "@/components/search/Filter/Filter";
+import Search from "@/components/search/Search";
 
-const HotelsListPage = ({ searchParams: { destination, checkin, checkout } }) => {
+const refineCategory = (category) => {
+    const decodedCategory = decodeURI(category);
+    if (decodedCategory === 'undefined') {
+        return "";
+    }
+    return decodedCategory;
+}
+
+const HotelsListPage = ({ searchParams: { destination, checkin, checkout, category } }) => {
     return (
         <>
             {/* <!-- Search Modify Area --> */}
@@ -15,7 +23,7 @@ const HotelsListPage = ({ searchParams: { destination, checkin, checkout } }) =>
             <section className="py-12">
                 <div className="container grid grid-cols-12">
                     <Filter />
-                    <HotelList destination={destination} checkin={checkin} checkout={checkout} />
+                    <HotelList destination={destination} checkin={checkin} checkout={checkout} category={refineCategory(category)} />
                 </div>
             </section>
         </>

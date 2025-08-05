@@ -5,7 +5,7 @@ import { reviewModel } from "@/models/review-model";
 import { userModel } from "@/models/user-model";
 import { isDateInBetween, replaceMongoIdInArray, replaceMongoIdInObject } from "@/utils/data-util";
 
-export async function getAllHotels(destination, checkin, checkout) {
+export async function getAllHotels(destination, checkin, checkout, category) {
     const regex = new RegExp(destination, "i")
 
     const hotelsByDestination = await hotelModel
@@ -14,6 +14,15 @@ export async function getAllHotels(destination, checkin, checkout) {
         .lean();
 
     let allHotels = hotelsByDestination
+
+    if (category) {
+        const categoriesToMatch = category.split('|')
+
+        allHotels = allHotels.filter(hotel => {
+            return categoriesToMatch.includes(hotel.
+                propertyCategory.toString())
+        })
+    }
 
     if (checkin && checkout) {
         allHotels = await Promise.all(allHotels.map(async (hotel) => {
