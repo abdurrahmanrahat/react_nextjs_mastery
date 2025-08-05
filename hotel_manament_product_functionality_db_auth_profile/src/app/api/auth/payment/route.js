@@ -1,5 +1,5 @@
 import { bookingModel } from "@/models/booking-model";
-import { dbConnect } from "@/service/mongo";
+import { dbConnect } from "@/services/mongo";
 import mongoose from "mongoose";
 import { NextResponse } from "next/server";
 

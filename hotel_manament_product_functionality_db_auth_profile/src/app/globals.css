@@ -77,6 +77,6 @@
     }
 
     .btn-disabled {
-        @apply bg-gray-500 cursor-default
+        @apply bg-gray-500 cursor-default px-8 py-2 rounded-md block text-white font-bold shadow-lg
     }
 }

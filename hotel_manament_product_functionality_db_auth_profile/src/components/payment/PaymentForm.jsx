@@ -1,6 +1,46 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
 const PaymentForm = ({ loggedInUser, hotelInfo, checkin, checkout }) => {
+  const [error, setError] = useState("");
+
+  const router = useRouter();
+
+  async function onSubmit(event) {
+    event.preventDefault();
+
+    try {
+      const formData = new FormData(event.currentTarget);
+
+      const hotelId = hotelInfo?.id;
+      const userId = loggedInUser?.id;
+      const checkin = formData.get("checkin");
+      const checkout = formData.get("checkout");
+
+      const res = await fetch("/api/auth/payment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          hotelId,
+          userId,
+          checkin,
+          checkout,
+        }),
+      });
+
+      res.status === 201 && router.push("/bookings");
+    } catch (error) {
+      console.error(error);
+      setError(error.message);
+    }
+  }
+
   return (
-    <form className="my-8">
+    <form className="my-8" onSubmit={onSubmit}>
       <div className="my-4 space-y-2">
         <label htmlFor="name" className="block">
           Name
@@ -28,14 +68,14 @@ const PaymentForm = ({ loggedInUser, hotelInfo, checkin, checkout }) => {
       <div className="my-4 space-y-2">
         <span>Check in</span>
         <h4 className="mt-2">
-          <input type="date" name="checkin" id="checkin" value={checkin} />
+          <input type="date" name="checkin" value={checkin} id="checkin" />
         </h4>
       </div>
 
       <div className="my-4 space-y-2">
         <span>Checkout</span>
         <h4 className="mt-2">
-          <input type="date" name="checkout" id="checkout" value={checkout} />
+          <input type="date" name="checkout" value={checkout} id="checkout" />
         </h4>
       </div>
 
@@ -72,8 +112,12 @@ const PaymentForm = ({ loggedInUser, hotelInfo, checkin, checkout }) => {
         />
       </div>
 
-      <button type="submit" className="btn-primary w-full">
-        Pay Now ($10)
+      <button
+        disabled={hotelInfo?.isBooked}
+        type="submit"
+        className="btn-primary w-full"
+      >
+        Pay Now (${(hotelInfo?.highRate + hotelInfo?.lowRate) / 2})
       </button>
     </form>
   );
