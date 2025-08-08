@@ -3,6 +3,7 @@ import { dbConnect } from "@/services/mongo";
 import mongoose from "mongoose";
 import { NextResponse } from "next/server";
 
+// add
 export const POST = async (request) => {
     const { hotelId, userId, checkin, checkout } = await request.json();
 
