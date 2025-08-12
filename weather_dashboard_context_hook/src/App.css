@@ -1,1 +1,14 @@
 @import "tailwindcss";
+
+@theme {
+    --color-primary: #B4D429;
+    --color-dark: #171923;
+    --color-light: #fff;
+    --color-body: #1D1E28;
+}
+
+.container {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+}

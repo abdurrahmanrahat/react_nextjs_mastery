@@ -1,9 +1,16 @@
 import "./App.css";
+import Header from "./components/Header/Header";
+import WeatherBoard from "./components/weather/WeatherBoard";
 
 function App() {
   return (
-    <div>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
+    <div className="">
+      <Header />
+      <main className="mt-20 2xl:mt-5 h-screen grid place-items-center">
+        <section>
+          <WeatherBoard />
+        </section>
+      </main>
     </div>
   );
 }
