@@ -60,7 +60,7 @@ function getLocations() {
 function getLocationByName(location) {
     if (!location) return null;
 
-    const filtered = data.filter((item) => item.location === location);
+    const filtered = data.filter((item) => item.location.toLowerCase() === location.toLowerCase());
 
     if (filtered.length > 0) {
         return filtered[0];
