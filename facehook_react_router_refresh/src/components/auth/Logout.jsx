@@ -1,15 +1,18 @@
 import { useNavigate } from "react-router-dom";
 import LogoutIcon from "../../assets/icons/logout.svg";
+import { useAuth } from "../../hooks/useAuth";
 
 const Logout = () => {
+  const { setAuth } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
+    setAuth({});
     navigate("/login");
   };
 
   return (
-    <button className="icon-btn" onClick={handleLogout}>
+    <button className="icon-btn cursor-pointer" onClick={handleLogout}>
       <img src={LogoutIcon} alt="Logout" />
     </button>
   );
