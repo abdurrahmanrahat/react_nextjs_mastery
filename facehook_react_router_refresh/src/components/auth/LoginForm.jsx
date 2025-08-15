@@ -13,7 +13,9 @@ const LoginForm = () => {
     handleSubmit,
     formState: { errors },
     setError,
-  } = useForm();
+  } = useForm({
+    defaultValues: { email: "saadh392@mail.com", password: "bestPassw0rd" },
+  });
 
   const handleLoginForm = async (formData) => {
     try {
