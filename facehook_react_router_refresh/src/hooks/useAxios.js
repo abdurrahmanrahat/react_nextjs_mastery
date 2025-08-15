@@ -21,7 +21,6 @@ const useAxios = () => {
 
         // add a response intercept
         const responseIntercept = api.interceptors.response.use((response) => response, async (error) => {
-            // console.log("error from response", error)
             const originalRequest = error.config;
 
             if (error.response.status === 401 && !originalRequest._retry) {
@@ -37,8 +36,6 @@ const useAxios = () => {
 
                     // console.log("New TOKEN", token)
                     originalRequest.headers.Authorization = `Bearer ${token}`
-
-                    // console.log("originalRequest", originalRequest)
 
                     return axios(originalRequest) // perform request: do again request after setting new token
                 } catch (error) {
