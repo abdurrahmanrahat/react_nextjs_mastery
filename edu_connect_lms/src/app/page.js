@@ -1,6 +1,12 @@
+import { toast } from "sonner";
 
 export default function Home() {
+  const handleSubmit = () => {
+    toast.success("su")
+  }
   return (
-    <div>Home</div>
+    <div>
+      <button onClick={handleSubmit}>Test</button>
+    </div>
   );
 }
