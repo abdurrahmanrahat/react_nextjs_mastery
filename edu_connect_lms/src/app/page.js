@@ -1,12 +1,12 @@
-import { toast } from "sonner";
+import { getCourses } from "@/services/queries/courses";
 
-export default function Home() {
-  const handleSubmit = () => {
-    toast.success("su")
-  }
+
+export default async function Home() {
+  const courses = await getCourses()
+  console.log("c", courses)
   return (
     <div>
-      <button onClick={handleSubmit}>Test</button>
+      page
     </div>
   );
 }
