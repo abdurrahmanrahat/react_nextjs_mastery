@@ -5,7 +5,7 @@ import { createCheckoutSession } from "@/services/actions/stripe";
 import { ArrowRight } from "lucide-react";
 import { Button, buttonVariants } from "./ui/button";
 
-export const EnrolledCourse = ({ asLink }) => {
+export const EnrolledCourse = ({ course, asLink }) => {
   const formAction = async (data) => {
     // call server action from here
     const { url } = await createCheckoutSession(data);
@@ -15,6 +15,10 @@ export const EnrolledCourse = ({ asLink }) => {
 
   return (
     <form action={formAction}>
+      <input type="hidden" name="courseId" value={course?.id} />
+      <input type="hidden" name="courseName" value={course?.title} />
+      <input type="hidden" name="coursePrice" value={course?.price} />
+
       {asLink ? (
         <Button
           type="submit"
