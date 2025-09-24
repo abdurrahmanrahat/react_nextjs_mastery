@@ -16,8 +16,9 @@ export const EnrolledCourse = ({ course, asLink }) => {
   return (
     <form action={formAction}>
       <input type="hidden" name="courseId" value={course?.id} />
-      <input type="hidden" name="courseName" value={course?.title} />
-      <input type="hidden" name="coursePrice" value={course?.price} />
+      {/* <input type="hidden" name="courseName" value={course?.title} />
+      <input type="hidden" name="coursePrice" value={course?.price} /> */}
+      {/* it's unusual, user can change the price from inspect */}
 
       {asLink ? (
         <Button
