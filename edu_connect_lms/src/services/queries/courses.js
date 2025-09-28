@@ -48,22 +48,30 @@ export async function getCourseDetails(id) {
 }
 
 export async function getCourseDetailsByInstructor(instructorId) {
-    const courses = await Course.find({ instructor: instructorId }).lean()
+    const courses = await Course.find({ instructor: instructorId }).lean();
 
-    // get enrollments
     const enrollments = await Promise.all(
         courses.map(async (course) => {
             const enrollment = await getEnrollmentsForCourse(course._id.toString());
-
-            return enrollment
+            return enrollment;
         })
-    )
+    );
 
-    const totalEnrollments = enrollments.reduce(function (acc, obj){
+    const groupedByCourses = Object.groupBy(enrollments.flat(), ({ course }) => course);
+
+    const totalRevenue = courses.reduce((acc, course) => {
+        if (groupedByCourses[course._id.toString()]) {
+            return (acc + groupedByCourses[course._id.toString()]?.length * course.price)
+        } else{
+            return acc
+        }
+
+    }, 0);
+
+    const totalEnrollments = enrollments.reduce(function (acc, obj) {
         return acc + obj.length;
     }, 0)
 
-    // get testimonials
     const testimonials = await Promise.all(
         courses.map(async (course) => {
             const testimonial = await getTestimonialsForCourse(course._id.toString());
@@ -71,18 +79,17 @@ export async function getCourseDetailsByInstructor(instructorId) {
         })
     );
 
-    const totalTestimonials = testimonials.flat()
-
+    const totalTestimonials = testimonials.flat();
     const avgRating = (totalTestimonials.reduce(function (acc, obj) {
         return acc + obj.rating;
     }, 0)) / totalTestimonials.length;
 
 
-
     return {
-        courses: courses.length,
-        enrollments: totalEnrollments,
-        reviews: totalTestimonials.length,
-        ratings: avgRating.toPrecision(2)
+        "courses": courses.length,
+        "enrollments": totalEnrollments,
+        "reviews": totalTestimonials.length,
+        "ratings": avgRating.toPrecision(2),
+        "revenue": totalRevenue
     }
 }

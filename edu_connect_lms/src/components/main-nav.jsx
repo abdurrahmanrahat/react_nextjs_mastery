@@ -19,6 +19,7 @@ import {
 export function MainNav({ items, children }) {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [loginSession, setLoginSession] = useState(null);
+  const [loggedInUser, setLoggedInUser] = useState(null);
 
   const { data: session } = useSession();
 
@@ -28,6 +29,19 @@ export function MainNav({ items, children }) {
 
   useEffect(() => {
     setLoginSession(session);
+
+    async function fetchMe() {
+      try {
+        const response = await fetch("/api/me");
+        const user = await response.json();
+
+        setLoggedInUser(user);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    fetchMe();
   }, [session]);
 
   return (
@@ -88,7 +102,8 @@ export function MainNav({ items, children }) {
             <div className="cursor-pointer">
               <Avatar>
                 <AvatarImage
-                  src="https://github.com/shadcn.png"
+                  src={loggedInUser?.profilePicture}
+                  // src="https://github.com/shadcn.png"
                   alt="@shadcn"
                 />
                 <AvatarFallback>CN</AvatarFallback>
@@ -99,6 +114,11 @@ export function MainNav({ items, children }) {
             <DropdownMenuItem className="cursor-pointer" asChild>
               <Link href="/account">Profile</Link>
             </DropdownMenuItem>
+            {loggedInUser?.role === "instructor" && (
+              <DropdownMenuItem className="cursor-pointer" asChild>
+                <Link href="/dashboard">Dashboard</Link>
+              </DropdownMenuItem>
+            )}
             <DropdownMenuItem className="cursor-pointer" asChild>
               <Link href="/account/enrolled-courses">My Courses</Link>
             </DropdownMenuItem>

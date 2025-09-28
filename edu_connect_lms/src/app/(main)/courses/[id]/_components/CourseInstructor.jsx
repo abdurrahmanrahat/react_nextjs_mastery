@@ -10,12 +10,19 @@ const CourseInstructor = async ({ course }) => {
     instructor._id.toString()
   );
 
+  // const instructorImage = instructor?.profilePicture
+  //   ? `/images/instructors/${instructor?.profilePicture}`
+  //   : `/images/instructors/demo.png`;
+
+  // console.log("instructorImage", instructorImage);
+
   return (
     <div className="bg-gray-50 rounded-md p-8">
       <div className="md:flex md:gap-x-5 mb-8">
         <div className="h-[310px] w-[270px] max-w-full  flex-none rounded mb-5 md:mb-0">
           <Image
             src={instructor?.profilePicture}
+            // src={`/images/instructors/${instructor?.profilePicture}`}
             alt={fullName}
             className="w-full h-full object-cover rounded"
             width={270}
