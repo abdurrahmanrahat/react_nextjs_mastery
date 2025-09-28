@@ -1,10 +1,24 @@
+import { auth } from "@/../auth";
 import { EnrolledCourse } from "@/components/enroll-course";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { hasEnrollmentForCourse } from "@/services/queries/enrollments";
+import { getUserByEmail } from "@/services/queries/users";
 import Image from "next/image";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
-const CourseDetailsIntro = ({ course }) => {
+const CourseDetailsIntro = async ({ course }) => {
+  const session = await auth();
+
+  if (!session?.user) redirect("/login");
+  const loggedInUser = await getUserByEmail(session?.user?.email);
+
+  const hasEnrollment = await hasEnrollmentForCourse(
+    course?.id,
+    loggedInUser?.id
+  );
+
   return (
     <div className="overflow-x-hidden  grainy">
       <section className="pt-12  sm:pt-16">
@@ -22,7 +36,14 @@ const CourseDetailsIntro = ({ course }) => {
               </p>
 
               <div className="mt-6 flex items-center justify-center flex-wrap gap-3">
-                <EnrolledCourse course={course} />
+                {hasEnrollment ? (
+                  <Link href="" className={cn(buttonVariants({ size: "lg" }))}>
+                    Access Course
+                  </Link>
+                ) : (
+                  <EnrolledCourse course={course} />
+                )}
+
                 <Link
                   href=""
                   className={cn(

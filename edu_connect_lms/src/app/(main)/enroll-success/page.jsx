@@ -41,7 +41,6 @@ const Success = async ({ searchParams: { session_id, courseId } }) => {
       loggedInUser?.id,
       "stripe"
     );
-    console.log(enrolled);
 
     // Send Emails to the instructor, student,and the person
     // who paid
@@ -62,7 +61,6 @@ const Success = async ({ searchParams: { session_id, courseId } }) => {
     ];
 
     const emailSentResponse = await sendEmails(emailsToSend);
-    console.log(emailSentResponse);
   }
 
   return (

@@ -10,14 +10,34 @@ export async function getEnrollmentsForCourse(courseId) {
 export async function getEnrollmentsForUser(userId) {
     try {
         const enrollments = await Enrollment.find({ student: userId })
-        .populate({
-            path: "course",
-            model: Course
-        })
-        .lean();
+            .populate({
+                path: "course",
+                model: Course
+            })
+            .lean();
         return replaceMongoIdInArray(enrollments);
     } catch (error) {
         throw new Error(error)
+    }
+}
+
+export async function hasEnrollmentForCourse(courseId, studentId) {
+    try {
+        const enrollment = await Enrollment.findOne({
+            course: courseId,
+            student: studentId,
+        })
+            .populate({
+                path: "course",
+                model: Course,
+            })
+            .lean();
+
+        if (!enrollment) return false;
+
+        return true;
+    } catch (error) {
+        throw new Error(error);
     }
 }
 
